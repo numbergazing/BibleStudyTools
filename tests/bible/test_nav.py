@@ -1,4 +1,4 @@
-from biblestudytools.bible.nav import get_book_size
+from biblestudytools.bible.urls import get_book_size
 
 
 def test_get_book_size():
