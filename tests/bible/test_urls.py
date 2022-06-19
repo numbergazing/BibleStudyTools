@@ -1,6 +1,7 @@
 import pytest
 
-from biblestudytools.bible.exceptions import BibleVersionDoesNotExistError, BookDoesNotExistError
+from biblestudytools.bible.exceptions import BibleVersionDoesNotExistError, BookDoesNotExistError, \
+    ChapterNumDoesNotExist
 from biblestudytools.bible.urls import construct_chapter_url
 
 
@@ -23,3 +24,5 @@ def test_not_construct_chapter_url():
         construct_chapter_url("foo", "esther", 9)
     with pytest.raises(BookDoesNotExistError):
         construct_chapter_url("king-james", "bar", 24),
+    with pytest.raises(ChapterNumDoesNotExist):
+        construct_chapter_url("king-james", "james", 6),
