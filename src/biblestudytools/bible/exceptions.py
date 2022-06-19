@@ -9,6 +9,10 @@ class BookDoesNotExistError(Exception):
     pass
 
 
+class ChapterNumDoesNotExist(Exception):
+    pass
+
+
 def check_bible_version_and_book_slug(bible_version: str, book_slug: str) -> str:
 
     bible_version_code: str
