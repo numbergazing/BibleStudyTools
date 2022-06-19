@@ -134,3 +134,7 @@ new_testament_books = {
     "jude": "Jude",
     "revelation": "Revelation",
 }
+version_books = {
+    "septuagint": septuagint_books,
+    "king-james": old_testament_books | new_testament_books
+}
