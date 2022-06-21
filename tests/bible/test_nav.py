@@ -1,4 +1,5 @@
-from biblestudytools.bible.nav import get_verses
+from biblestudytools.bible.nav import get_verses, get_verse
+from biblestudytools.bible.util import Verse
 
 
 def test_get_verses():
@@ -222,4 +223,16 @@ def test_get_verses():
         }
     ]
     result = get_verses("septuagint", "genesis", 1)
+    assert result == expected_result
+
+
+def test_get_verse():
+    expected_result = Verse(
+        bible_version='Septuagint',
+        book='Genesis',
+        chapter_num=1,
+        verse_num=1,
+        text='In the beginning God made the heaven and the earth.'
+    )
+    result = get_verse("septuagint", "genesis", 1, 1)
     assert result == expected_result
