@@ -1,4 +1,4 @@
-
+from dataclasses import dataclass
 
 bible_versions = {
     "septuagint": "Septuagint",
@@ -138,6 +138,16 @@ version_books = {
     "septuagint": septuagint_books,
     "king-james": old_testament_books | new_testament_books
 }
+
+
+@dataclass
+class Verse:
+
+    bible_version: str
+    book: str
+    chapter_num: int
+    verse_num: int
+    text: str
 
 
 def chain_replace(string: str, old: list[str], new: str) -> str:
