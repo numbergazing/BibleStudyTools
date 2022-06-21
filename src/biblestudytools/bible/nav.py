@@ -10,7 +10,7 @@ def _sanitized_verse_text_data(div: Tag) -> str:
     return chain_replace(div.text, ["\n", f"{int(div.a.text)}"], "").strip()
 
 
-def get_verses(bible_version: str, book_slug: str, chapter_num: int) -> list[Verse]:
+def get_verses(bible_version: str, book_slug: str, chapter_num: int, first: int = 0, last: int = 0) -> list[Verse]:
 
     url: str
     html: BeautifulSoup
@@ -21,6 +21,28 @@ def get_verses(bible_version: str, book_slug: str, chapter_num: int) -> list[Ver
     html = get_markup(url)
     divs = html.find_all("div")
     filtered_divs = [div for div in divs if "data-verse-id" in div.attrs.keys()]
+
+    if first > 0 and last > 0:
+
+        if first > last:
+            raise ValueError
+
+        nb_chapters: int = len(filtered_divs)
+        if first > nb_chapters:
+            raise VerseDoesNotExistError
+        elif last > nb_chapters:
+            raise VerseDoesNotExistError
+        else:
+            return [
+                Verse(
+                    bible_versions[bible_version],
+                    version_books[bible_version][book_slug],
+                    chapter_num,
+                    int(filtered_divs[n].a.text),
+                    _sanitized_verse_text_data(filtered_divs[n]),
+                )
+                for n in range(first - 1, last)
+            ]
 
     return [
         Verse(
