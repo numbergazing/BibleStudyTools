@@ -1,3 +1,5 @@
+__all__ = ["construct_book_url", "construct_chapter_url", "get_book_size"]
+
 from re import compile
 
 from bs4 import BeautifulSoup, ResultSet

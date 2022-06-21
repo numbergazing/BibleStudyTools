@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "biblestudytools"
-version = "0.6.3"
+version = "0.6.4"
 description = ""
 authors = ["numbergazing <hello@numbergazing.com>"]
 

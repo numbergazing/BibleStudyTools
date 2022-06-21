@@ -1,3 +1,11 @@
+__all__ = [
+    "BibleVersionDoesNotExistError",
+    "BookDoesNotExistError",
+    "ChapterNumDoesNotExist",
+    "VerseDoesNotExistError",
+    "check_bible_version_and_book_slug",
+]
+
 from biblestudytools.bible.util import bible_versions, bible_version_codes, version_books
 
 

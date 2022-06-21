@@ -1,3 +1,5 @@
+__all__ = ["get_verse", "get_verses"]
+
 from bs4 import BeautifulSoup, ResultSet, Tag
 
 from biblestudytools.bible.exceptions import VerseDoesNotExistError
