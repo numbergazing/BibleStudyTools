@@ -223,7 +223,7 @@ def test_get_verses():
         }
     ]
     result = get_verses("septuagint", "genesis", 1)
-    assert result == expected_result
+    assert [row.__dict__ for row in result] == expected_result
 
 
 def test_get_verse():
