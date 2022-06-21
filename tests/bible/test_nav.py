@@ -6,6 +6,7 @@ from biblestudytools.bible.util import Verse
 
 
 def test_get_verses():
+
     expected_result = [
         {
             "bible_version": "Septuagint",
@@ -227,6 +228,55 @@ def test_get_verses():
     ]
     result = get_verses("septuagint", "genesis", 1)
     assert [row.__dict__ for row in result] == expected_result
+
+    expected_result = [
+        {
+            "bible_version": "Septuagint",
+            "book": "Genesis",
+            "chapter_num": 1,
+            "verse_num": 1,
+            "text": "In the beginning God made the heaven and the earth."
+        },
+        {
+            "bible_version": "Septuagint",
+            "book": "Genesis",
+            "chapter_num": 1,
+            "verse_num": 2,
+            "text": "But the earth was unsightly and unfurnished, and darkness was over the deep, and the Spirit of God moved over the water."
+        },
+        {
+            "bible_version": "Septuagint",
+            "book": "Genesis",
+            "chapter_num": 1,
+            "verse_num": 3,
+            "text": "And God said, Let there be light, and there was light."
+        },
+        {
+            "bible_version": "Septuagint",
+            "book": "Genesis",
+            "chapter_num": 1,
+            "verse_num": 4,
+            "text": "And God saw the light that it was good, and God divided between the light[a] and the darkness."
+        },
+        {
+            "bible_version": "Septuagint",
+            "book": "Genesis",
+            "chapter_num": 1,
+            "verse_num": 5,
+            "text": "And God called the light Day, and the darkness he called Night, and there was evening and there was morning, the first day."
+        }
+    ]
+    result = get_verses("septuagint", "genesis", 1, first=1, last=5)
+    assert [row.__dict__ for row in result] == expected_result
+
+
+def test_not_get_verses():
+
+    with pytest.raises(VerseDoesNotExistError):
+        get_verses("septuagint", "genesis", 1, first=1, last=420)
+
+    with pytest.raises(ValueError):
+        get_verses("septuagint", "genesis", 1, first=6, last=5)
 
 
 def test_get_verse():
