@@ -138,3 +138,9 @@ version_books = {
     "septuagint": septuagint_books,
     "king-james": old_testament_books | new_testament_books
 }
+
+
+def chain_replace(string: str, old: list[str], new: str) -> str:
+    for word in old:
+        string = string.replace(word, new)
+    return string
