@@ -1,3 +1,6 @@
+import pytest
+
+from biblestudytools.bible.exceptions import VerseDoesNotExistError
 from biblestudytools.bible.nav import get_verses, get_verse
 from biblestudytools.bible.util import Verse
 
@@ -236,3 +239,8 @@ def test_get_verse():
     )
     result = get_verse("septuagint", "genesis", 1, 1)
     assert result == expected_result
+
+
+def test_not_get_verse():
+    with pytest.raises(VerseDoesNotExistError):
+        get_verse("septuagint", "genesis", 1, 420)
