@@ -1,11 +1,15 @@
-from bs4 import BeautifulSoup, ResultSet
+from bs4 import BeautifulSoup, ResultSet, Tag
 
 from biblestudytools.bible.urls import construct_chapter_url
 from biblestudytools.bible.util import bible_versions, version_books, chain_replace, Verse
 from biblestudytools.nav import get_markup
 
 
-def get_verses(bible_version: str, book_slug: str, chapter_num: int) -> list[dict]:
+def _sanitized_verse_text_data(div: Tag) -> str:
+    return chain_replace(div.text, ["\n", f"{int(div.a.text)}"], "").strip()
+
+
+def get_verses(bible_version: str, book_slug: str, chapter_num: int) -> list[Verse]:
 
     url: str
     html: BeautifulSoup
@@ -18,13 +22,13 @@ def get_verses(bible_version: str, book_slug: str, chapter_num: int) -> list[dic
     filtered_divs = [div for div in divs if "data-verse-id" in div.attrs.keys()]
 
     return [
-        {
-            "bible_version": bible_versions[bible_version],
-            "book": version_books[bible_version][book_slug],
-            "chapter_num": chapter_num,
-            "verse_num": int(div.a.text),
-            "text": chain_replace(div.text, ["\n", f"{int(div.a.text)}"], "").strip()
-        }
+        Verse(
+            bible_versions[bible_version],
+            version_books[bible_version][book_slug],
+            chapter_num,
+            int(div.a.text),
+            _sanitized_verse_text_data(div),
+        )
         for div in filtered_divs
     ]
 
@@ -33,7 +37,7 @@ def get_verse(bible_version: str, book_slug: str, chapter_num: int, verse_num: i
 
     url: str
     html: BeautifulSoup
-    filtered_divs: list
+    div: Tag
 
     url = construct_chapter_url(bible_version, book_slug, chapter_num)
     html = get_markup(url)
@@ -44,5 +48,5 @@ def get_verse(bible_version: str, book_slug: str, chapter_num: int, verse_num: i
         version_books[bible_version][book_slug],
         chapter_num,
         verse_num,
-        chain_replace(div.text, ["\n", f"{int(div.a.text)}"], "").strip(),
+        _sanitized_verse_text_data(div),
     )
