@@ -2,7 +2,7 @@ import pytest
 
 from biblestudytools.bible.exceptions import BibleVersionDoesNotExistError, BookDoesNotExistError, \
     ChapterNumDoesNotExist
-from biblestudytools.bible.urls import construct_chapter_url
+from biblestudytools.bible.urls import construct_chapter_url, get_book_size
 
 
 def test_construct_chapter_url():
@@ -26,3 +26,13 @@ def test_not_construct_chapter_url():
         construct_chapter_url("king-james", "bar", 24),
     with pytest.raises(ChapterNumDoesNotExist):
         construct_chapter_url("king-james", "james", 6),
+
+
+def test_get_book_size():
+    expected_result = [50, 66, 5]
+    result = [
+        get_book_size("septuagint", "genesis"),
+        get_book_size("king-james", "isaiah"),
+        get_book_size("king-james", "james"),
+    ]
+    assert result == expected_result
